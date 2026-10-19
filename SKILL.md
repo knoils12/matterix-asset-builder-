@@ -24,6 +24,7 @@ description: 从 CAD（STEP、SolidWorks）、网格、URDF/MJCF 或现有 USD �
 - **抓取、旋盖、可拆接口、注射器或液体：**读 [操作与语义](references/operations-and-semantics.md)。沿动作链核对每个目标与连接，测试操作前提、释放和重置。
 - **Matterix 配置、操作帧、回调、场景或多环境：**读 [项目接入](references/matterix-integration.md)。复用当前框架，提供实际可运行的最小入口。
 - **验证、合并 USD、交付或分享：**读 [验证与打包](references/validation-and-packaging.md)。按实际入口、执行路径和文件版本给出证据。
+- **已有规范几何，需要可复现构建或便携 ZIP：**读 [构建工具](references/build-tools.md)，使用显式 JSON 配方生成物理覆盖层，再收集本地相对依赖。模板参数是演示估算，必须按本任务依据替换；工具不推断机构、不自动接入 Matterix。
 
 米制、千克、Z-up 是规范化资产的默认约定；保留其他源约定时做显式边界换算。检查最终 spawn 世界尺度及当前 API 的四元数、角度约定。USD、Python 覆盖和控制器的有效参数须一致。
 

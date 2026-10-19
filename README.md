@@ -45,6 +45,24 @@ git clone https://github.com/knoils12/matterix-asset-builder-.git \
 | [验证与打包](references/validation-and-packaging.md) | 分级证据、inactive 定义、USD 合并和依赖闭包 |
 | [验收记录模板](assets/acceptance-template.md) | 中文零件/关节功能、参数依据及测量记录 |
 | [只读 USD 检查](scripts/inspect_usd.py) | 组合依赖、物理节点清单和部分静态不变量 |
+| [配方构建](scripts/build_asset.py) | 显式写入刚体、质量惯量、碰撞、材质、关节驱动和操作帧 |
+| [依赖打包](scripts/package_asset.py) | 保留 USD 分层、收集相对依赖和指定文件，输出 ZIP 与哈希清单 |
+| [构建说明](references/build-tools.md) / [配方模板](assets/build-recipe.json) | 字段、单位、命令、输入保护与工具边界 |
+
+## 构建与打包脚本
+
+准备转换并核对过的米制/Z-up 几何 USD，复制配方模板并填写真实节点路径、参数及依据，再执行：
+
+```bash
+python -B scripts/build_asset.py \
+  --recipe /path/to/work/recipe.json --output /path/to/work/built
+
+python -B scripts/package_asset.py \
+  --root /path/to/work --entry built/asset.usda \
+  --include built/build.json --output /path/to/delivery.zip
+```
+
+输出路径须尚不存在。构建保留原几何，新增入口、物理层和构建记录；打包收集这些层及源几何依赖。Python 控制脚本、配置和其他动态资源需逐文件追加 `--include`。模板是教学估算，不能直接套用实机；不会自动转换 CAD、推断运动链或完成 Matterix 运行验证。详见 [构建工具说明](references/build-tools.md)。
 
 ## 只读检查脚本
 
@@ -64,7 +82,7 @@ python -B -m unittest discover -s tests -p 'test_*.py' -v
 2026-10-19，OpenUSD Python `0.26.8`：
 
 - skill frontmatter/命名结构校验通过。
-- 7 个自动化测试通过，包含静态支架、自由器皿、滑台/非激活连接三类合成资产，以及缺失依赖、错误关节目标、无效惯量、报告防覆盖。
+- 19 个自动化测试通过：包括原有检查器测试，以及构建质量/惯量、关节驱动、材质/帧、网格碰撞、非法配方、源文件保护、防覆盖、CLI 构建打包、搬迁重开、哈希与非激活连接保留。
 - 本地相对文档链接、Python 语法、发布内容与个人路径检查通过。
 - [行为评估案例](tests/skill-cases.md) 提供后续独立 AI 评估输入；当前未执行独立模型行为评测。
 

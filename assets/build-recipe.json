@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "geometry": "geometry/model.usda",
+  "default_prim": "/Asset",
+  "sources": "单轴滑台教学配方；数值均为演示估算，使用前替换节点路径与参数依据。",
+  "bodies": [
+    {"path": "/Asset/Base", "mass_kg": 2, "source": "演示估算"},
+    {
+      "path": "/Asset/Slider",
+      "mass_kg": 1,
+      "center_of_mass_m": [0, 0, 0],
+      "diagonal_inertia_kg_m2": [0.001, 0.001, 0.001],
+      "principal_axes_xyzw": [0, 0, 0, 1],
+      "source": "演示估算"
+    }
+  ],
+  "materials": [
+    {"path": "/Asset/Materials/Contact", "static_friction": 0.6, "dynamic_friction": 0.4, "restitution": 0, "source": "演示估算"}
+  ],
+  "colliders": [
+    {"path": "/Asset/Base/Collider", "material": "/Asset/Materials/Contact"},
+    {"path": "/Asset/Slider/Collider", "material": "/Asset/Materials/Contact"}
+  ],
+  "joints": [
+    {
+      "path": "/Asset/Joints/WorldFixed", "type": "fixed", "body0": null, "body1": "/Asset/Base",
+      "local_pos0_m": [0, 0, 0], "local_pos1_m": [0, 0, 0],
+      "local_rot0_xyzw": [0, 0, 0, 1], "local_rot1_xyzw": [0, 0, 0, 1]
+    },
+    {
+      "path": "/Asset/Joints/Slide", "type": "prismatic", "body0": "/Asset/Base", "body1": "/Asset/Slider",
+      "local_pos0_m": [0, 0, 0], "local_pos1_m": [0, 0, 0],
+      "local_rot0_xyzw": [0, 0, 0, 1], "local_rot1_xyzw": [0, 0, 0, 1],
+      "axis": "X", "limits": [0, 0.3],
+      "drive": {"type": "force", "stiffness": 500, "damping": 30, "max_force": 100, "target_position": 0},
+      "source": "演示估算；需验证锚点、行程、驱动力和跟随响应"
+    }
+  ],
+  "frames": [
+    {"path": "/Asset/Slider/grasp", "position_m": [0, 0, 0.05], "orientation_xyzw": [0, 0, 0, 1]}
+  ],
+  "articulation_root": "/Asset/Base"
+}
