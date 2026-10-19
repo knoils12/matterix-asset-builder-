@@ -1,0 +1,4 @@
+interface:
+  display_name: "Matterix 资产制作"
+  short_description: "从 CAD、网格或 USD 创建、验证和打包可接入 Matterix 的物理资产"
+  default_prompt: "使用 $matterix-asset-builder，按当前 Matterix 源码将指定模型制作或修复为具有所需物理和操作能力的资产，并验证后交付。"
